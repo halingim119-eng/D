@@ -8,8 +8,21 @@ export default async (request) => {
 
   if (isBrowser) {
     return new Response(
-      `<!DOCTYPE html><html><head><meta charset="utf-8"><title></title></head><body style="background:#fff"></body></html>`,
-      { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } }
+      `<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>`,
+      {
+        status: 404,
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "no-store",
+          "server": "nginx",
+        },
+      }
     );
   }
 
