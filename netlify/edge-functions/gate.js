@@ -1,11 +1,15 @@
 export default async (request) => {
-  const ua = (request.headers.get("user-agent") || "").toLowerCase();
-  const isBrowser = /mozilla|chrome|safari|firefox|edg|opera/.test(ua);
+  const h = request.headers;
+  const isBrowser =
+    h.has("sec-fetch-mode") ||
+    h.has("sec-fetch-dest") ||
+    h.has("upgrade-insecure-requests") ||
+    (h.get("accept") || "").includes("text/html");
 
   if (isBrowser) {
     return new Response(
       `<!DOCTYPE html><html><head><meta charset="utf-8"><title></title></head><body style="background:#fff"></body></html>`,
-      { headers: { "content-type": "text/html; charset=utf-8" } }
+      { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } }
     );
   }
 
